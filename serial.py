@@ -97,9 +97,12 @@ def main():
                 processed_line = process_line(line.decode().strip())
                 # Increment line count
                 line_count += 1
-
+    elif response.status_code == 403:
+        print("Invalid token")
+        return
     else:
         print(f"Failed to retrieve data: {response.status_code}")
+        return
 
     elapsed_time = time.time() - start_time
     print(f"Total time taken: {elapsed_time:.2f} seconds")

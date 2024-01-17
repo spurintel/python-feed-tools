@@ -33,6 +33,7 @@ import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import requests
 
+
 def process_batch(batch):
     """
     Processes a batch of lines, assuming each line is a JSON object.
@@ -78,6 +79,12 @@ def stream_and_process(url, token, batch_size=100000):
     if response.status_code != 200:
         print(f"Failed to retrieve data: {response.status_code}")
         return
+    elif response.status_code == 403:
+        print("Invalid token")
+        return
+    else:
+        print(f"Failed to retrieve data: {response.status_code}")
+        return
 
     batch = []
     with gzip.GzipFile(fileobj=response.raw) as gzip_file:
@@ -110,7 +117,8 @@ def main():
     start_time = time.time()
 
     # Set up argument parsing
-    parser = argparse.ArgumentParser(description="Stream and process data for a specified feed type.")
+    parser = argparse.ArgumentParser(
+        description="Stream and process data for a specified feed type.")
     parser.add_argument("--feed_type", default="anonymous", choices=["anonymous", "anonymous-residential"],
                         help="Type of feed to process (default: %(default)s)")
     args = parser.parse_args()
@@ -122,7 +130,8 @@ def main():
     elif args.feed_type == "anonymous-residential":
         url = base_url + 'anonymous-residential/latest.json.gz'
 
-    token = os.getenv('API_TOKEN', '')  # Get the token from an environment variable
+    # Get the token from an environment variable
+    token = os.getenv('API_TOKEN', '')
     if not token or token == '':
         print("Please set the API_TOKEN environment variable")
         return
