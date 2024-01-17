@@ -29,6 +29,7 @@ import time
 import os
 import requests
 
+
 def process_line(line):
     """
     Process a single line of data.
@@ -45,6 +46,7 @@ def process_line(line):
     parsed = json.loads(line)
     # TODO: Perform processing here (e.g., data transformation, database insertion, etc.)
     return line
+
 
 def main():
     """
@@ -65,7 +67,8 @@ def main():
     start_time = time.time()
 
     # Set up argument parsing
-    parser = argparse.ArgumentParser(description="Stream and process data from a specified feed type.")
+    parser = argparse.ArgumentParser(
+        description="Stream and process data from a specified feed type.")
     parser.add_argument("--feed_type", default="anonymous", choices=["anonymous", "anonymous-residential"],
                         help="Type of feed to process (default: %(default)s)")
     args = parser.parse_args()
@@ -77,7 +80,8 @@ def main():
     elif args.feed_type == "anonymous-residential":
         url = base_url + 'anonymous-residential/latest.json.gz'
 
-    token = os.getenv('API_TOKEN', '')  # Get the token from an environment variable
+    # Get the token from an environment variable
+    token = os.getenv('API_TOKEN', '')
     if not token or token == '':
         print("Please set the API_TOKEN environment variable")
         return
@@ -100,6 +104,7 @@ def main():
     elapsed_time = time.time() - start_time
     print(f"Total time taken: {elapsed_time:.2f} seconds")
     print(f"Total lines processed: {line_count}")
+
 
 if __name__ == "__main__":
     main()

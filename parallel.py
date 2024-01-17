@@ -48,7 +48,7 @@ def process_batch(batch):
         int: The number of lines processed.
     """
     for line in batch:
-        json.loads(line)  # Assuming processing involves JSON parsing
+        parsed = json.loads(line)
         # TODO: Perform processing here (e.g., data transformation, database insertion, etc.)
     return len(batch)  # Return the count of lines processed
 
