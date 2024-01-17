@@ -76,13 +76,10 @@ def stream_and_process(url, token, batch_size=100000):
     headers = {'TOKEN': token}
     response = requests.get(url, headers=headers, stream=True)
 
-    if response.status_code != 200:
-        print(f"Failed to retrieve data: {response.status_code}")
-        return
-    elif response.status_code == 403:
+    if response.status_code == 403:
         print("Invalid token")
         return
-    else:
+    elif response.status_code != 200:
         print(f"Failed to retrieve data: {response.status_code}")
         return
 
