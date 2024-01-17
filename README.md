@@ -2,6 +2,10 @@
 
 Python examples for downloading and processing spur feeds. All scripts were tested with python version 3.10.12.
 
+## Disclaimer
+
+No actual processing is done (e.g., writing to a file, inserting into a database). The scripts only print the number of lines processed and the time taken to process them.
+
 ## Scripts
 
 There are two main scripts in this repository:
